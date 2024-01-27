@@ -1,15 +1,13 @@
 <!-- <h1> Kubenetes Deployment using Argo CD </h1> -->
-<h1> Build a docker image and push to Docker Hub/Nexus Repositoy </h1>
+<h1> GitOps CD using Argo CD </h1>
 
 <p align="center">
-<img alt="NGINX" width="270px" src="https://raw.githubusercontent.com/sagarkrp/sagarkrp/main/images/docker.svg" style="padding-right:10px;" />
+<img alt="ArgoCD" width="270px" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/argocd/argocd-original-wordmark.svg" style="padding-right:10px;" />
 </p>
 </br>
 
 ## Read the whole Article here: 
-## Docker hub: <a href = "https://medium.com/@sagarkrp/docker-chapter-2-build-and-push-your-first-docker-image-7d7f9d71f1ca" target ="_blank"><img src = "https://img.shields.io/badge/medium-%23E4405G.svg?&style=for-the-badge&logo=medium&logoColor=black&white" height="22px"></a>
-
-## Nexus: <a href = "https://medium.com/@sagarkrp/how-to-push-docker-images-to-nexus-repository-using-jenkins-4cc77d247a65" target ="_blank"><img src = "https://img.shields.io/badge/medium-%23E4405G.svg?&style=for-the-badge&logo=medium&logoColor=black&white" height="22px"></a>
+## badge/medium-%23E4405G.svg?&style=for-the-badge&logo=medium&logoColor=black&white" height="22px"></a>
 
 <h3>- Build the Image </h3>
 
@@ -57,19 +55,8 @@ To view the list of Images we can use : docker images command.
 REPOSITORY   TAG       IMAGE ID       CREATED        SIZE
 fbweb        1.0       bcb23d33bf82   1 minutes ago   163MB 
 ```
-<h2> - Running the application: </h2>
 
-- Now lets run this image with the following command:
 
-```
-──| docker run --name fb -td -p 80:80 fbweb:1.0 
-551eddaa8434ac7665e85bf7e959493eb21783ad4f332fdcc5b678e5769ae233
-
-──| docker ps
-CONTAINER ID   IMAGE       COMMAND                  CREATED         STATUS         PORTS                               NAMES
-551eddaa8434   fbweb:1.0   "/bin/sh -c 'service…"   6 seconds ago   Up 6 seconds   0.0.0.0:80->80/tcp, :::80->80/tcp   fb
-
-```
 
 - Lets Browse our application:
 

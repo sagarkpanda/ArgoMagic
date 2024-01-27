@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: argo-web
+  template:
+    metadata:
+      labels:
+        app: argo-web
+    spec:
+      containers:
+      - name: c1
+        image: sagarkp/fakeweb:3
+        imagePullPolicy: Always
+        stdin: true
+        tty: true
+

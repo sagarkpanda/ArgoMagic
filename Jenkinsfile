@@ -8,7 +8,7 @@ pipeline {
         ARGOAPP = 'myapp'  // Replace with your ArgoCD application name
         IMAGE_NAME = 'sagarkp/fakeweb'
         GITHUB_REPO = 'sagarkrp/ArgoMagic'  // Replace with your GitHub repository
-        DEPLOYMENT_YAML_PATH = ''  // Replace with the path to your deployment YAML file
+        DEPLOYMENT_YAML = 'deployment.yml'  // Replace with the path to your deployment YAML file
     }
 
     stages {
@@ -50,16 +50,16 @@ pipeline {
             steps {
                 script {
                     // Read the deployment YAML
-                    def deploymentYAML = readFile("${DEPLOYMENT_YAML_PATH}")
+                    def deploymentYAML = readFile("${DEPLOYMENT_YAML}")
 
                     // Replace the image tag with the Jenkins build number
                     def updatedYAML = deploymentYAML.replaceAll(/image: ${IMAGE_NAME}:\d+/, "image: ${IMAGE_NAME}:${BUILD_NUMBER}")
 
                     // Save the updated YAML to a temporary file
-                    def updatedYAMLFile = writeYaml file: "${DEPLOYMENT_YAML_PATH}", data: updatedYAML
+                    def updatedYAMLFile = writeYaml file: "${DEPLOYMENT_YAML}", data: updatedYAML
 
                     // Stage and commit the changes
-                    git.add("${DEPLOYMENT_YAML_PATH}")
+                    git.add("${DEPLOYMENT_YAML}")
                     git.commit("Update image tag to ${BUILD_NUMBER}")
                 }
             }

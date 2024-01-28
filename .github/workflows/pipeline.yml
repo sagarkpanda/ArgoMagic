@@ -3,7 +3,8 @@ name: CI/CD
 on:
   push:
     branches:
-      - main  # Adjust the branch name if necessary
+      - master  # Adjust the branch name if necessary
+workflow_dispatch:
 
 jobs:
   build:

@@ -40,7 +40,7 @@ pipeline {
                     git config user.email "$GIT_EMAIL"
                     git config user.name "Sagar"
                     BUILD_NUMBER=${BUILD_NUMBER}
-                    sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" .deployment.yml
+                    sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" deployment.yml
                     git add ArgoMagic/deployment.yml
                     git commit -m "Update deployment image to version ${BUILD_NUMBER}"
                     git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main

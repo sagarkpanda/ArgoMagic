@@ -46,14 +46,27 @@ pipeline {
                         writeFile file: "${DEPLOYMENT_YAML}", text: updatedYAML
 
                         // Stage and commit the changes
-                        git.add("${DEPLOYMENT_YAML}")
-                        git.commit("Update image tag to ${BUILD_NUMBER}")
+
                 }
             }
         }
     }
 
-}
+         stage('Push Changes to GitHub') {
+            steps {
+                    // Push the changes to GitHub
+                    // git.push('origin', 'master')\
+                    sh 'git.add("${DEPLOYMENT_YAML}")'
+                    sh 'git.commit("Update image tag to ${BUILD_NUMBER}")'
+                    sh 'git status'
+                    sh 'git push origin master'
+                }
+        }
+
+    }
+
+
+
     post {
         success {
             script {

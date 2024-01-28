@@ -53,16 +53,7 @@ pipeline {
         }
     }
 
-         stage('Push Changes to GitHub') {
-            steps {
-                    // Push the changes to GitHub
-                    // git.push('origin', 'master')
-                    sh 'git status'
-                    sh 'git push origin master'
-                }
-        }
-
-    }
+}
     post {
         success {
             script {

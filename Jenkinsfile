@@ -28,7 +28,7 @@ pipeline {
             }
         }
 
-        
+
        stage('Update Deployment File') {
         environment {
             GIT_REPO_NAME = "ArgoMagic"
@@ -56,7 +56,7 @@ pipeline {
             script {
 
                 // Trigger ArgoCD sync after updating deployment
-                sh "curl -u 'admin:v6ReR9yCcvJZdWEg' -k -X POST https://${ARGOSERVER}:${ARGOPORT}/api/v1/applications/${ARGOAPP}/sync"
+                sh "curl -u 'uname:pw' -k -X POST https://${ARGOSERVER}:${ARGOPORT}/api/v1/applications/${ARGOAPP}/sync"
             }
         }
     }

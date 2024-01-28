@@ -9,7 +9,7 @@ pipeline {
         IMAGE_NAME = 'sagarkp/fakeweb'
     }
 
-    // stages {
+    stages {
     //     stage('Docker Login') {
     //         steps {
     //             sh 'echo "DOCKERHUB_CREDENTIALS" | docker login -u sagarkp --password-stdin docker.io'

@@ -12,7 +12,8 @@ pipeline {
     stages {
         stage('Docker Login') {
             steps {
-                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin docker.io'
+                docker.withRegistry('https://index.docker.io/v1/', 'DOCKERHUB_TOKEN_CREDENTIALS')
+                // sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin docker.io'
                 echo 'Login Completed'
             }
         }

@@ -49,18 +49,24 @@ pipeline {
         stage('Update Deployment YAML') {
             steps {
                 script {
+                   script {
                     // Read the deployment YAML
                     def deploymentYAML = readFile("${DEPLOYMENT_YAML}")
 
                     // Replace the image tag with the Jenkins build number
                     def updatedYAML = deploymentYAML.replaceAll(/image: ${IMAGE_NAME}:\d+/, "image: ${IMAGE_NAME}:${BUILD_NUMBER}")
 
-                    // Save the updated YAML to a temporary file
-                    def updatedYAMLFile = writeYaml file: "${DEPLOYMENT_YAML}", data: updatedYAML
+                    // Check if the file already exists before writing it
+                    def deploymentFile = new File("${DEPLOYMENT_YAML}")
+                    if (deploymentFile.exists()) {
+                        echo "Deployment YAML file already exists. Skipping write."
+                    } else {
+                        // Save the updated YAML to the deployment YAML file
+                        writeFile file: "${DEPLOYMENT_YAML}", text: updatedYAML
 
-                    // Stage and commit the changes
-                    git.add("${DEPLOYMENT_YAML}")
-                    git.commit("Update image tag to ${BUILD_NUMBER}")
+                        // Stage and commit the changes
+                        git.add("${DEPLOYMENT_YAML}")
+                        git.commit("Update image tag to ${BUILD_NUMBER}")
                 }
             }
         }

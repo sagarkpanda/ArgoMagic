@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - master  # Adjust the branch name if necessary
-workflow_dispatch:
+  workflow_dispatch:
 
 jobs:
   build:

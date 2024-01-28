@@ -61,10 +61,6 @@ pipeline {
         steps {
             withCredentials([string(credentialsId: 'git_creds', variable: 'GITHUB_TOKEN')]) {
                 sh '''
-                    // git config user.email "$GIT_EMAIL"
-                    // git config user.name "Sagar"
-                    // BUILD_NUMBER=${BUILD_NUMBER}
-                    // sed -i 's|image: ${IMAGE_NAME}:.*|image: ${IMAGE_NAME}:${BUILD_NUMBER}|' deployment.yml
                     git add deployment.yml
                     git commit -m "Update deployment image to version ${BUILD_NUMBER}"
                     git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main

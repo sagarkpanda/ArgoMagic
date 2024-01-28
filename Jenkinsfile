@@ -3,9 +3,9 @@ pipeline {
     agent any
     environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub-creds')
-        ARGOSERVER = 'argocd-server.example.com'  // Replace with your ArgoCD server address
+        ARGOSERVER = '20.235.194.89'  // Replace with your ArgoCD server address
         ARGOPORT = '443'  // Replace with your ArgoCD server port
-        ARGOAPP = 'myapp'  // Replace with your ArgoCD application name
+        ARGOAPP = 'fakeweb'  // Replace with your ArgoCD application name
         IMAGE_NAME = 'sagarkp/fakeweb'
         GITHUB_REPO = 'sagarkrp/ArgoMagic'  // Replace with your GitHub repository
         DEPLOYMENT_YAML = 'deployment.yml'  // Replace with the path to your deployment YAML file
@@ -54,14 +54,6 @@ pipeline {
     post {
         success {
             script {
-                // echo "Build success! Updating deployment to use image:${BUILD_NUMBER}"
-
-                // // Update deployment.yml with the new image and tag
-                // sh "sed -i 's|image: ${IMAGE_NAME}:.*|image: ${IMAGE_NAME}:${BUILD_NUMBER}|' deployment.yml"
-
-                // // Commit the changes to Git (assuming Git is configured in your Jenkins environment)
-                // sh "git commit -am 'Update deployment image to ${IMAGE_NAME}:${BUILD_NUMBER}'"
-                // sh "git push origin master"  // Adjust branch name if necessary
 
                 // Trigger ArgoCD sync after updating deployment
                 sh "curl -k -X POST https://${ARGOSERVER}:${ARGOPORT}/api/v1/applications/${ARGOAPP}/sync"

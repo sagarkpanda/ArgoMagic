@@ -21,6 +21,7 @@ pipeline {
         stage('Docker Build') {
             steps {
                 echo 'Building docker Image'
+                sh 'whoami'
                 sh "docker build -t ${IMAGE_NAME}:${BUILD_NUMBER} ."
             }
         }

@@ -29,6 +29,30 @@ pipeline {
         }
 
 
+         stage('Update Deployment YAML') {
+            steps {
+                   script {
+                    // Read the deployment YAML
+                    def deploymentYAML = readFile("${DEPLOYMENT_YAML}")
+
+                    // Replace the image tag with the Jenkins build number
+                    def updatedYAML = deploymentYAML.replaceAll(/image: ${IMAGE_NAME}:\d+/, "image: ${IMAGE_NAME}:${BUILD_NUMBER}")
+
+                    // Check if the file already exists before writing it
+                    def deploymentFile = new File("${DEPLOYMENT_YAML}")
+                    if (deploymentFile.exists()) {
+                        echo "Deployment YAML file already exists. Skipping write."
+                    } else {
+                        // Save the updated YAML to the deployment YAML file
+                        writeFile file: "${DEPLOYMENT_YAML}", text: updatedYAML
+
+                        // Stage and commit the changes
+
+                }
+            }
+        }
+    }
+        
        stage('Update Deployment File') {
         environment {
             GIT_REPO_NAME = "ArgoMagic"
@@ -37,10 +61,10 @@ pipeline {
         steps {
             withCredentials([string(credentialsId: 'git_creds', variable: 'GITHUB_TOKEN')]) {
                 sh '''
-                    git config user.email "$GIT_EMAIL"
-                    git config user.name "Sagar"
-                    BUILD_NUMBER=${BUILD_NUMBER}
-                    sed -i 's|image: ${IMAGE_NAME}:.*|image: ${IMAGE_NAME}:${BUILD_NUMBER}|' deployment.yml
+                    // git config user.email "$GIT_EMAIL"
+                    // git config user.name "Sagar"
+                    // BUILD_NUMBER=${BUILD_NUMBER}
+                    // sed -i 's|image: ${IMAGE_NAME}:.*|image: ${IMAGE_NAME}:${BUILD_NUMBER}|' deployment.yml
                     git add deployment.yml
                     git commit -m "Update deployment image to version ${BUILD_NUMBER}"
                     git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main

@@ -64,6 +64,15 @@ pipeline {
                 }
             }
         }
+
+         stage('Push Changes to GitHub') {
+            steps {
+                script {
+                    // Push the changes to GitHub
+                    git.push('origin', 'master')
+                }
+            }
+        }
         
     }
 

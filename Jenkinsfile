@@ -60,7 +60,7 @@ pipeline {
                 git add "${DEPLOYMENT_YAML}"
                 git commit -m "Update image tag to ${BUILD_NUMBER}"
                 git status
-                git push origin master
+                git push origin/master HEAD:master
             """
         }
     }

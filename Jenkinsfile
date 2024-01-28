@@ -40,10 +40,10 @@ pipeline {
                     git config user.email "$GIT_EMAIL"
                     git config user.name "Sagar"
                     BUILD_NUMBER=${BUILD_NUMBER}
-                    sed -i 's|image: sagarkp/fakeweb:.*|image: sagarkp/fakeweb:${BUILD_NUMBER |' deployment.yml
+                    sed -i 's|image: sagarkp/fakeweb:.*|image: sagarkp/fakeweb:${BUILD_NUMBER} |' deployment.yml
                     git add deployment.yml
                     git commit -m "Update deployment image to version ${BUILD_NUMBER}"
-                    git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
+                    git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:master
                 '''
             }
         }

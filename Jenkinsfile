@@ -8,7 +8,7 @@ pipeline {
         ARGOAPP = 'myapp'  // Replace with your ArgoCD application name
         IMAGE_NAME = 'sagarkp/fakeweb'
         GITHUB_REPO = 'sagarkrp/ArgoMagic'  // Replace with your GitHub repository
-        DEPLOYMENT_YAML_PATH = ','  // Replace with the path to your deployment YAML file
+        DEPLOYMENT_YAML_PATH = ''  // Replace with the path to your deployment YAML file
     }
 
     stages {

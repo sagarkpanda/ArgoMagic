@@ -45,8 +45,6 @@ pipeline {
                         // Save the updated YAML to the deployment YAML file
                         writeFile file: "${DEPLOYMENT_YAML}", text: updatedYAML
 
-                        // Stage and commit the changes
-
                 }
             }
         }

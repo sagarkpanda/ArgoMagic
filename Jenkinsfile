@@ -12,7 +12,7 @@ pipeline {
     stages {
         stage('Docker Login') {
             steps {
-                echo "DOCKERHUB_CREDENTIALS" | docker login -u sagarkp --password-stdin docker.io
+                sh 'echo "DOCKERHUB_CREDENTIALS" | docker login -u sagarkp --password-stdin docker.io'
                 // sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin docker.io'
                 echo 'Login Completed'
             }

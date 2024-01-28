@@ -4,7 +4,7 @@ provider "azurerm" {
 
 resource "azurerm_resource_group" "jenkins_rg" {
   name     = "jenkins-rg"
-  location = "Central India"
+  location = "East US"
 }
 
 resource "azurerm_virtual_network" "jenkins_vnet" {
@@ -62,6 +62,20 @@ resource "azurerm_network_security_rule" "jenkins_allow_http_alt" {
   network_security_group_name = azurerm_network_security_group.jenkins_nsg.name
 }
 
+resource "azurerm_network_security_rule" "jenkins_ssh" {
+  name                        = "jenkins-allow-http-alt"
+  priority                    = 1003
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "22"
+  source_address_prefix       = "*"
+  destination_address_prefix  = "*"
+  resource_group_name         = azurerm_resource_group.jenkins_rg.name
+  network_security_group_name = azurerm_network_security_group.jenkins_nsg.name
+}
+
 resource "azurerm_network_interface" "jenkins_nic" {
   name                = "jenkins-nic"
   location            = azurerm_resource_group.jenkins_rg.location
@@ -80,7 +94,7 @@ resource "azurerm_linux_virtual_machine" "jenkins_vm" {
   location              = azurerm_resource_group.jenkins_rg.location
   resource_group_name   = azurerm_resource_group.jenkins_rg.name
   network_interface_ids = [azurerm_network_interface.jenkins_nic.id]
-  size                  = "Standard_DS1_v2"
+  size                  = "Standard_D2s_v3"
 
   admin_username = "jenkinsadmin"
   admin_password = "JenkinsP@ssw0rd!"

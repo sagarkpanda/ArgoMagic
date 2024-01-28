@@ -13,7 +13,7 @@ jobs:
     env:
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
       ARGOSERVER: 'argocd-server.example.com'  # Replace with your ArgoCD server address
       ARGOPORT: '443'  # Replace with your ArgoCD server port
       ARGOAPP: 'fakweb'  # Replace with your ArgoCD application name

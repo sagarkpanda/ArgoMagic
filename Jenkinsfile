@@ -32,7 +32,7 @@ pipeline {
        stage('Update Deployment File') {
         environment {
             GIT_REPO_NAME = "ArgoMagic"
-            GIT_USER_NAME = "sagarkp"
+            GIT_USER_NAME = "sagarkrp"
         }
         steps {
             withCredentials([string(credentialsId: 'git_creds', variable: 'GITHUB_TOKEN')]) {

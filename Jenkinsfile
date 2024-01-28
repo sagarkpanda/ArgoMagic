@@ -21,7 +21,6 @@ pipeline {
             }
         }
 
-
         stage('Docker Push') {
             steps {
                 echo 'Pushing Image to Docker Hub'
@@ -64,9 +63,6 @@ pipeline {
         }
 
     }
-
-
-
     post {
         success {
             script {

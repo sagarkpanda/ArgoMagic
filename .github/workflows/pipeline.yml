@@ -1,0 +1,62 @@
+name: CI/CD
+
+on:
+  push:
+    branches:
+      - main  # Adjust the branch name if necessary
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    env:
+      DOCKERHUB_CREDENTIALS: ${{ secrets.DOCKERHUB_CREDENTIALS }}
+      ARGOSERVER: argocd-server.example.com  # Replace with your ArgoCD server address
+      ARGOPORT: 443  # Replace with your ArgoCD server port
+      ARGOAPP: myapp  # Replace with your ArgoCD application name
+      IMAGE_NAME: sagarkp/fakeweb
+      DEPLOYMENT_YAML: deployment.yml  # Replace with the path to your deployment YAML file
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Docker
+        uses: docker/setup-docker@v2
+
+      - name: Build Docker image
+        run: |
+          docker build -t $IMAGE_NAME:${{ github.run_number }} .
+          echo "::set-output name=IMAGE_NAME::$IMAGE_NAME:${{ github.run_number }}"
+
+      - name: Push Docker image
+        run: |
+          docker login -u $DOCKERHUB_CREDENTIALS_USR -p $DOCKERHUB_CREDENTIALS_PSW
+          docker push $IMAGE_NAME:${{ github.run_number }}
+
+      - name: Update Deployment YAML
+        run: |
+          # Read the deployment YAML
+          deploymentYAML=$(cat $DEPLOYMENT_YAML)
+
+          # Replace the image tag with the GitHub run number
+          updatedYAML=$(echo "$deploymentYAML" | sed "s|image: $IMAGE_NAME:.*|image: $IMAGE_NAME:${{ github.run_number }}|")
+
+          # Save the updated YAML to the deployment YAML file
+          echo "$updatedYAML" > $DEPLOYMENT_YAML
+
+      - name: Push changes to GitHub
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add $DEPLOYMENT_YAML
+          git commit -m "Update image tag to $IMAGE_NAME:${{ github.run_number }}"
+          git push
+
+  post:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Trigger ArgoCD sync
+        run: |
+          curl -k -X POST https://${{ env.ARGOSERVER }}:${{ env.ARGOPORT }}/api/v1/applications/${{ env.ARGOAPP }}/sync

@@ -52,16 +52,19 @@ pipeline {
         }
     }
 
-         stage('Push Changes to GitHub') {
-            steps {
-                    // Push the changes to GitHub
-                    // git.push('origin', 'master')\
-                    sh 'git.add("${DEPLOYMENT_YAML}")'
-                    sh 'git.commit("Update image tag to ${BUILD_NUMBER}")'
-                    sh 'git status'
-                    sh 'git push origin master'
-                }
+        stage('Push Changes to GitHub') {
+    steps {
+        script {
+            // Push the changes to GitHub
+            sh """
+                git add "${DEPLOYMENT_YAML}"
+                git commit -m "Update image tag to ${BUILD_NUMBER}"
+                git status
+                git push origin master
+            """
         }
+    }
+}
 
     }
 

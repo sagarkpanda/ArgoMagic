@@ -7,6 +7,8 @@ pipeline {
         ARGOPORT = '443'  // Replace with your ArgoCD server port
         ARGOAPP = 'myapp'  // Replace with your ArgoCD application name
         IMAGE_NAME = 'sagarkp/fakeweb'
+        GITHUB_REPO = 'sagarkrp/ArgoMagic'  // Replace with your GitHub repository
+        DEPLOYMENT_YAML_PATH = ','  // Replace with the path to your deployment YAML file
     }
 
     stages {
@@ -35,28 +37,47 @@ pipeline {
             }
         }
 
-    stage('Debug') {
-    steps {
-        script {
-            sh 'git status'
-            sh 'git branch'
+//     stage('Debug') {
+//     steps {
+//         script {
+//             sh 'git status'
+//             sh 'git branch'
+//         }
+//     }
+// }
+
+        stage('Update Deployment YAML') {
+            steps {
+                script {
+                    // Read the deployment YAML
+                    def deploymentYAML = readFile("${DEPLOYMENT_YAML_PATH}")
+
+                    // Replace the image tag with the Jenkins build number
+                    def updatedYAML = deploymentYAML.replaceAll(/image: ${IMAGE_NAME}:\d+/, "image: ${IMAGE_NAME}:${BUILD_NUMBER}")
+
+                    // Save the updated YAML to a temporary file
+                    def updatedYAMLFile = writeYaml file: "${DEPLOYMENT_YAML_PATH}", data: updatedYAML
+
+                    // Stage and commit the changes
+                    git.add("${DEPLOYMENT_YAML_PATH}")
+                    git.commit("Update image tag to ${BUILD_NUMBER}")
+                }
+            }
         }
-    }
-}
         
     }
 
     post {
         success {
             script {
-                echo "Build success! Updating deployment to use image:${BUILD_NUMBER}"
+                // echo "Build success! Updating deployment to use image:${BUILD_NUMBER}"
                 
-                // Update deployment.yml with the new image and tag
-                sh "sed -i 's|image: ${IMAGE_NAME}:.*|image: ${IMAGE_NAME}:${BUILD_NUMBER}|' deployment.yml"
+                // // Update deployment.yml with the new image and tag
+                // sh "sed -i 's|image: ${IMAGE_NAME}:.*|image: ${IMAGE_NAME}:${BUILD_NUMBER}|' deployment.yml"
                 
-                // Commit the changes to Git (assuming Git is configured in your Jenkins environment)
-                sh "git commit -am 'Update deployment image to ${IMAGE_NAME}:${BUILD_NUMBER}'"
-                sh "git push origin master"  // Adjust branch name if necessary
+                // // Commit the changes to Git (assuming Git is configured in your Jenkins environment)
+                // sh "git commit -am 'Update deployment image to ${IMAGE_NAME}:${BUILD_NUMBER}'"
+                // sh "git push origin master"  // Adjust branch name if necessary
                 
                 // Trigger ArgoCD sync after updating deployment
                 sh "curl -k -X POST https://${ARGOSERVER}:${ARGOPORT}/api/v1/applications/${ARGOAPP}/sync"

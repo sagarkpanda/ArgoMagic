@@ -58,6 +58,7 @@ pipeline {
             steps {
                     // Push the changes to GitHub
                     // git.push('origin', 'master')
+                    sh 'git status'
                     sh 'git push origin master'
                 }
         }

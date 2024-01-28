@@ -26,12 +26,24 @@ pipeline {
             }
         }
 
+        
+
         stage('Docker Push') {
             steps {
                 echo 'Pushing Image to Docker Hub'
                 sh "docker push ${IMAGE_NAME}:${BUILD_NUMBER}"
             }
         }
+
+    stage('Debug') {
+    steps {
+        script {
+            sh 'git status'
+            sh 'git branch'
+        }
+    }
+}
+        
     }
 
     post {

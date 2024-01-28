@@ -12,13 +12,6 @@ pipeline {
     }
 
     stages {
-        // stage('Docker Login') {
-        //     steps {
-        //         // sh 'echo "DOCKERHUB_CREDENTIALS" | docker login -u sagarkp --password-stdin docker.io'
-        //         sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin docker.io'
-        //         echo 'Login Completed'
-        //     }
-        // }
 
         stage('Docker Build') {
             steps {
@@ -28,7 +21,6 @@ pipeline {
             }
         }
 
-        
 
         stage('Docker Push') {
             steps {
@@ -37,18 +29,8 @@ pipeline {
             }
         }
 
-//     stage('Debug') {
-//     steps {
-//         script {
-//             sh 'git status'
-//             sh 'git branch'
-//         }
-//     }
-// }
-
         stage('Update Deployment YAML') {
             steps {
-                script {
                    script {
                     // Read the deployment YAML
                     def deploymentYAML = readFile("${DEPLOYMENT_YAML}")
@@ -70,6 +52,7 @@ pipeline {
                 }
             }
         }
+    }
 
          stage('Push Changes to GitHub') {
             steps {
@@ -79,21 +62,23 @@ pipeline {
                 }
             }
         }
-        
+
     }
+
+
 
     post {
         success {
             script {
                 // echo "Build success! Updating deployment to use image:${BUILD_NUMBER}"
-                
+
                 // // Update deployment.yml with the new image and tag
                 // sh "sed -i 's|image: ${IMAGE_NAME}:.*|image: ${IMAGE_NAME}:${BUILD_NUMBER}|' deployment.yml"
-                
+
                 // // Commit the changes to Git (assuming Git is configured in your Jenkins environment)
                 // sh "git commit -am 'Update deployment image to ${IMAGE_NAME}:${BUILD_NUMBER}'"
                 // sh "git push origin master"  // Adjust branch name if necessary
-                
+
                 // Trigger ArgoCD sync after updating deployment
                 sh "curl -k -X POST https://${ARGOSERVER}:${ARGOPORT}/api/v1/applications/${ARGOAPP}/sync"
             }

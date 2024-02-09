@@ -29,7 +29,7 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
   }
 
   tags = {
-    environment = "cprime"
+    environment = "argocd"
     managed_by  = "Terraform"
   }
 }

@@ -34,7 +34,7 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
   }
 }
 
-resource "helm_release" "argo_cd" {
+/* resource "helm_release" "argo_cd" {
   name       = "argocd"
   repository = "https://argoproj.github.io/argo-helm"
   chart      = "argo-cd"
@@ -46,4 +46,4 @@ resource "helm_release" "argo_cd" {
   }
 
   depends_on = [azurerm_kubernetes_cluster.aks_cluster]
-}
+} */

@@ -6,6 +6,18 @@
 </p>
 </br>
 
+<p align="center">
+<a href = "https://sagarcodectrl.medium.com/from-code-to-cluster-argocd-gitops-for-kubernetes-895c734677ef" target ="_blank">
+</p>
+</br>
+<h3> <strong> Read the detailed article on: </strong> </h3> <a href = "https://sagarcodectrl.medium.com/from-code-to-cluster-argocd-gitops-for-kubernetes-895c734677ef" target ="_blank"> 
+ 
+<picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://github.com/sagarkrp/sagarkrp/blob/main/images/Medium-white1x.png" width="180px" height="45px">
+   <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/sagarkrp/sagarkrp/main/images/Medium-dark.svg" width="180px" height="45px"> 
+   <img alt="Medium Alternative Theme." src="https://raw.githubusercontent.com/sagarkrp/sagarkrp/main/images/Medium-dark.svg" width="180px" height="45px">
+</picture> </a>
+
 ---
 
 ## Creating docker Image of web app

@@ -51,7 +51,7 @@ pipeline {
 }
 
 
-    post {
+    /* post {
         success {
             script {
 
@@ -59,5 +59,5 @@ pipeline {
                 sh "curl -u 'uname:pw' -k -X POST https://${ARGOSERVER}:${ARGOPORT}/api/v1/applications/${ARGOAPP}/sync"
             }
         }
-    }
+    } */
 }

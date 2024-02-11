@@ -17,7 +17,9 @@
 ---
 
 ## Creating docker Image of web app
-
+<details>
+<summary>expand ⏬</summary>
+ 
 1. Create a docker file with all necessary steps.
 2. Build it with
 ```
@@ -28,6 +30,8 @@ docker build -t registry/repo:tag .
 ```
 docker push registry/repo:tag
 ```
+
+</details>
 
 ## Creating a cluster with Terraform
 
@@ -124,10 +128,14 @@ Note: There are 2 footer. the first is "icons"
 
 ## Crrate VM for Jenkins operation
 
+<details>
+<summary>expand ⏬</summary>
+
 * VM created for using Jenkins to build, push docker image.
 
 * apply main.tf under vm dir.
 
+</details>
 
 ## Ansible for docker and jenkins installation
 
@@ -190,8 +198,11 @@ The favicons footer has been removed for our deployed app.
 </details>
 
 ## Delete Resources
+<details>
+<summary>expand ⏬</summary>
 
 To destroy the resources use tf destroy.
 
 ![Image alt text](Screenshots/tf_destroy.png?raw=true "docker_ansible")
 
+</details>

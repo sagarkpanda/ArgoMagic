@@ -79,9 +79,9 @@ Note:
 <details>
 <summary>expand ⏬</summary>
 
-* I followed the argo cd documentation
+* Follow the argo cd documentation
 
-* apply the yaml which craetes a ns.
+* first cretae a ns for argocd and apply the yaml in that ns.
 
 ```
 kubectl create namespace argocd

@@ -112,7 +112,7 @@ kubectl port-forward svc/argocd-server -n argocd 8080:443
 argocd admin initial-password -n argocd
 ```
 
-Create app with url pointinv to the repo and the deployment yaml.
+Create app with url pointing to the repo and the deployment yaml.
 
 Upon apply, we'll see pods getting creted. 2 replicas for now.
 
@@ -122,7 +122,7 @@ The running web app accesible with LB ip
 
 ![Image alt text](Screenshots/app_run.png?raw=true "argohome")
 
-Note: There are 2 footer. the first is "icons"
+Note: There are 2 footers on the left. the first is "icons".
 
 </details>
 
@@ -142,7 +142,7 @@ Note: There are 2 footer. the first is "icons"
 <details>
 <summary>expand ⏬</summary>
 
-* Using ansible roles to install jenkins and docker.
+* Using ansible playbooks to install jenkins and docker.
 
 ### playbook: install_jenkins.yml
 

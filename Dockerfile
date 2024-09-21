@@ -1,4 +1,4 @@
-FROM httpd:2.4
+FROM httpd:2.4-alpine
 # RUN apt update -y
 # RUN apt install apache2 -y
 # RUN apt install lighttpd -y
